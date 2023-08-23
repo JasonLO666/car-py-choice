@@ -1,0 +1,5 @@
+<launch>
+	<master auto="start"/>
+	<rosparam file="$(find  cfg)/param/param_list.yaml" command="load" />
+	<node name="local_server" pkg="local_server" type="http_server.py"/>
+</launch>

@@ -1,0 +1,24 @@
+<launch>
+	<master auto="start"/>
+	<rosparam file="$(find  cfg)/param/param_list.yaml" command="load" />
+	<arg name="model" />
+	<param name="robot_description" textfile="$(find cfg)/script/robot.urdf" />
+	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+	<!-- 单片机节点 -->
+	<node name="mcu" pkg="mcu_driver_diff" type="mcu_driver_diff_node" respawn="true" output="screen"/>
+	<!-- 加速度计节点 -->
+	<node name="imu" pkg="imu_driver_diff" type="imu.py" /> 
+
+	
+	<!-- 雷达节点 -->
+	<node name="rplidar" pkg="rplidar_ros"  type="rplidarNode" />
+	<!-- 视频节点 -->
+	<node name="cam" pkg="cam_driver" type="cam_tcp_server.py" />
+	<!-- 机器人状态服务 -->
+	<node name="state_center" pkg="robot_state_center" type="state_center.py" />
+	<!-- 网络交互服务 -->
+	<node name="tcp2server" pkg="tcp2server_tcp_json" type="tcp2server.py" respawn="true"/>
+	<!-- 安全服务 -->
+	<node name="safety" pkg="safety_service" type="spd_ctrl.py" />
+</launch>

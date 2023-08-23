@@ -1,0 +1,14 @@
+<launch>
+	<!-- 地图节点 -->
+	<node pkg="map_provider" type="map_server.py" respawn="false" name="map_controller" />
+	<!-- 导航节点 -->
+	<node pkg="move_base" type="move_base" respawn="false" name="nav_plugin" />
+	<include file="$(find launch)/3rdparty/spd_smoother/spd_smoother.launch"/>
+	<!-- 定位节点 -->
+    <node pkg="amcl" type="amcl" name="amcl" args="scan:=scan" />
+	<!-- 单片机/加速度融合 -->
+	<node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf" />
+	<node pkg="tf" type="static_transform_publisher" name="base_footprint" args="0 0.0 0 0 0 0 /base_footprint /base_link 50" /> 
+	<!-- 任务节点 -->
+    <node pkg="planner" type="planner.py" name="task_planner" />
+</launch>

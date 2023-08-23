@@ -1,0 +1,12 @@
+<launch>
+	<!-- 定位/绘图节点 -->
+	<node name="slam_gmapping" pkg="gmapping" type="slam_gmapping" args="scan:=scan"/>
+	<!-- 导航节点 -->
+	<node pkg="move_base" type="move_base" respawn="false" name="nav_plugin"/>
+	<!-- 地图上传节点 -->
+	<node pkg="auto_mapping" type="post_map.py" respawn="false" name="map_uploader"/>
+</launch>
+
+
+
+	

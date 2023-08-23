@@ -1,0 +1,12 @@
+<launch>
+    <node name="cartographer_node" pkg="cartographer_ros"
+        type="cartographer_node" args="
+            -configuration_directory $(find cartographer_ros)/configuration_files
+            -configuration_basename pr2.lua"
+        output="screen">
+    </node>
+    <!-- 导航节点 -->
+    <node pkg="move_base" type="move_base" respawn="false" name="nav_plugin"/>
+    <!-- 地图上传节点 -->
+    <node pkg="auto_mapping" type="post_map.py" respawn="false" name="map_uploader"/>
+</launch>
